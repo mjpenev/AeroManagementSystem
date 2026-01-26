@@ -1,0 +1,21 @@
+services:
+  db:
+    container_name: postgres-aero-managment-system
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: mjpenev
+      POSTGRES_PASSWORD: MartinPenev
+      PGDATA: /data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - "5332:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+networks:
+  db:
+    driver: bridge
+volumes:
+  db:
