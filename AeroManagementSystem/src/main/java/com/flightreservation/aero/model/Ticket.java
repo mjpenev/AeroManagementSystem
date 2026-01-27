@@ -16,7 +16,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long ticketId;
 
-    private String seatNumber;
+    private int seatNumber;
 
     private LocalDateTime purchaseDate;
 

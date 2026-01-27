@@ -1,6 +1,6 @@
 package com.flightreservation.aero.exceptions;
 
-public class UserNotFoundException extends Exception {
+public class UserNotFoundException extends RuntimeException {
 
     public UserNotFoundException() {
         super();
@@ -15,7 +15,7 @@ public class UserNotFoundException extends Exception {
     }
 
     public UserNotFoundException(String message, Throwable exception) {
-        super (message, exception);
+        super(message, exception);
     }
 
 }

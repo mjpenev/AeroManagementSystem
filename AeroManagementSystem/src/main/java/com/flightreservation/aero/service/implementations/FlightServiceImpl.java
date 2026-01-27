@@ -11,25 +11,6 @@ import java.util.Optional;
 
 @Service
 public class FlightServiceImpl implements FlightService {
-    @Override
-    public Flight createFlight(Flight flight) {
-        return null;
-    }
-
-    @Override
-    public Flight updateFlightById(Long flightId) {
-        return null;
-    }
-
-    @Override
-    public void cancelFlight(Long flightId) {
-
-    }
-
-    @Override
-    public void delayFlight(Long flightId) {
-
-    }
 
     @Override
     public Optional<Flight> getFlightById(Long flightId) {

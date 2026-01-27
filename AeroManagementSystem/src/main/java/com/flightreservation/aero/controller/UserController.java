@@ -2,7 +2,6 @@ package com.flightreservation.aero.controller;
 
 import com.flightreservation.aero.dto.responses.Response;
 import com.flightreservation.aero.dto.responses.UserResponseDto;
-import com.flightreservation.aero.exceptions.UserNotFoundException;
 import com.flightreservation.aero.model.User;
 import com.flightreservation.aero.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +40,8 @@ public class UserController {
         );
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Response> getUserById(@PathVariable("id") Long userId) throws UserNotFoundException {
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Response> getUserById(@PathVariable("id") Long userId) {
         User user = userService.getUserById(userId);
 
         UserResponseDto userResponseDto = new UserResponseDto(
@@ -55,13 +54,13 @@ public class UserController {
         return ResponseEntity.ok(Response.builder()
                 .timeStamp(LocalDateTime.now())
                 .data("users", userResponseDto)
-                .message("User retreived succesfully.")
+                .message("User retrieved successfully.")
                 .success(true)
                 .build()
         );
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public ResponseEntity<Response> getUserByUsername(@PathVariable("username") String username) {
         User user = userService.getUserByUsername(username);
 
@@ -74,9 +73,10 @@ public class UserController {
         return ResponseEntity.ok(Response.builder()
                 .timeStamp(LocalDateTime.now())
                 .data("users", userResponseDto)
-                .message("User retreived succesfully.")
+                .message("User retrieved successfully.")
                 .success(true)
                 .build()
         );
     }
+
 }

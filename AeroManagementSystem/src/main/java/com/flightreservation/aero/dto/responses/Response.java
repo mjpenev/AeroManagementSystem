@@ -15,9 +15,7 @@ public class Response {
     protected LocalDateTime timeStamp;
     protected int statusCode;
     protected HttpStatus status;
-    protected String reason;
     protected String message;
-    protected String developerMessage;
     protected boolean success;
     protected Map<String, Object> data;
 
@@ -50,18 +48,8 @@ public class Response {
             return this;
         }
 
-        public ResponseBuilder reason(String reason) {
-            this.reason = reason;
-            return this;
-        }
-
         public ResponseBuilder message(String message) {
             this.message = message;
-            return this;
-        }
-
-        public ResponseBuilder developerMessage(String developerMessage) {
-            this.developerMessage = developerMessage;
             return this;
         }
 
@@ -81,8 +69,6 @@ public class Response {
                     this.statusCode,
                     this.status,
                     this.reason,
-                    this.message,
-                    this.developerMessage,
                     this.success,
                     this.data
             );
