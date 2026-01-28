@@ -130,4 +130,13 @@ public class FlightServiceImpl implements FlightService {
     public boolean flightExists(Long flightId) {
         return flightRepository.existsById(flightId);
     }
+
+    @Override
+    public boolean isFlightFull(Long flightId) {
+        Flight flight = flightRepository.findById(flightId)
+                .orElseThrow(() -> new FlightDoesNotExist("Flight not found"));
+
+        return flight.getTickets().size() >= flight.getSeats();
+    }
+
 }

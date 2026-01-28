@@ -20,4 +20,5 @@ public interface FlightService {
     List<Flight> getFlightsByDate(LocalDateTime fromDate, LocalDateTime toDate);
     List<Ticket> getAllTicketsForFlight(Long flightId);
     boolean flightExists(Long flightId);
+    boolean isFlightFull(Long flightId);
 }
