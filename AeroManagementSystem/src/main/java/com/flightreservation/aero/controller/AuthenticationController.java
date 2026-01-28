@@ -3,6 +3,7 @@ package com.flightreservation.aero.controller;
 import com.flightreservation.aero.dto.requests.RegisterRequest;
 import com.flightreservation.aero.dto.responses.Response;
 import com.flightreservation.aero.exceptions.UserAlreadyExists;
+import com.flightreservation.aero.service.interfaces.AuthenticationService;
 import com.flightreservation.aero.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,12 +17,12 @@ import java.time.LocalDateTime;
 @RestController
 @RequiredArgsConstructor
 public class AuthenticationController {
-    private final UserService userService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/api/users/register")
-    public ResponseEntity<Response> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<Response> createUser(@RequestBody RegisterRequest request) {
         try {
-            userService.createUser(request);
+            authenticationService.register(request);
 
             return ResponseEntity.ok(Response.builder()
                     .timeStamp(LocalDateTime.now())

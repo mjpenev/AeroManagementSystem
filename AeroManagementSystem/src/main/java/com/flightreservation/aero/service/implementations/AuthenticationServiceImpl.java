@@ -5,17 +5,18 @@ import com.flightreservation.aero.dto.requests.RegisterRequest;
 import com.flightreservation.aero.model.User;
 import com.flightreservation.aero.repository.UserRepository;
 import com.flightreservation.aero.service.interfaces.AuthenticationService;
+import com.flightreservation.aero.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     public User register(RegisterRequest request) {
-        return null;
+        return userService.createUserImpl(request);
     }
 
     @Override

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface UserService {
-    User createUser(RegisterRequest request);
+    User createUserImpl(RegisterRequest request);
     User getUserById(Long userId);
     User getUserByUsername(String username);
     User updateUser(Long userId, UpdateUserRequest request);

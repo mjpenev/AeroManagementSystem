@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User createUser(RegisterRequest request) {
+    public User createUserImpl(RegisterRequest request) {
 
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new UserAlreadyExists("The user is already registered in database");
