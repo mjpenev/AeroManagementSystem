@@ -1,11 +1,9 @@
 package com.flightreservation.aero.controller;
 
-import com.flightreservation.aero.dto.requests.FlightCreationRequest;
 import com.flightreservation.aero.dto.responses.Response;
 import com.flightreservation.aero.dto.responses.UserResponseDto;
 import com.flightreservation.aero.exceptions.UserNotFoundException;
 import com.flightreservation.aero.model.User;
-import com.flightreservation.aero.service.interfaces.FlightService;
 import com.flightreservation.aero.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

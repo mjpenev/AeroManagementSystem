@@ -70,13 +70,23 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    @Transactional
     public void cancelFlight(Long flightId) {
+        if (!flightExists(flightId)) {
+            throw new FlightDoesNotExist("Flight with given Id does not exist");
+        }
 
+        flightRepository.findById(flightId).get().setFlightStatus(FlightStatus.CANCELLED);
     }
 
     @Override
+    @Transactional
     public void delayFlight(Long flightId) {
+        if (!flightExists(flightId)) {
+            throw new FlightDoesNotExist("Flight with given Id does not exist");
+        }
 
+        flightRepository.findById(flightId).get().setFlightStatus(FlightStatus.DELAYED);
     }
 
     @Override

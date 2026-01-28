@@ -3,7 +3,6 @@ package com.flightreservation.aero.service.implementations;
 import com.flightreservation.aero.dto.requests.LoginRequest;
 import com.flightreservation.aero.dto.requests.RegisterRequest;
 import com.flightreservation.aero.model.User;
-import com.flightreservation.aero.repository.UserRepository;
 import com.flightreservation.aero.service.interfaces.AuthenticationService;
 import com.flightreservation.aero.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;

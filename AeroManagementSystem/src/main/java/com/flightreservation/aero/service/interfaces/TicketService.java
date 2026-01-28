@@ -1,5 +1,4 @@
 package com.flightreservation.aero.service.interfaces;
-import com.flightreservation.aero.exceptions.TicketDoesNotExist;
 import com.flightreservation.aero.model.Flight;
 import com.flightreservation.aero.model.Ticket;
 import com.flightreservation.aero.model.User;

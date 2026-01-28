@@ -6,11 +6,9 @@ import com.flightreservation.aero.dto.responses.Response;
 import com.flightreservation.aero.exceptions.FlightDoesNotExist;
 import com.flightreservation.aero.exceptions.TicketsAlreadySold;
 import com.flightreservation.aero.model.Flight;
-import com.flightreservation.aero.model.User;
 import com.flightreservation.aero.service.interfaces.FlightService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,6 +79,55 @@ public class FlightController {
         );
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Response> getFlightById(@PathVariable("id") Long flightId) {
+        try {
+            Flight flight = flightService.getFlightById(flightId);
+
+            return ResponseEntity.ok(Response.builder()
+                    .timeStamp(LocalDateTime.now())
+                    .data("flight", flight)
+                    .message("Flight retrieved successfully")
+                    .success(true)
+                    .build()
+            );
+        } catch (FlightDoesNotExist exception) {
+            return ResponseEntity.badRequest().body(
+                    Response.builder()
+                            .timeStamp(LocalDateTime.now())
+                            .message("Flight with given id does not exist.")
+                            .success(false)
+                            .build()
+            );
+        }
+    }
+
+    @GetMapping("/period/{from}/{to}")
+    public ResponseEntity<Response> getFlightsByDate(@PathVariable("from") LocalDateTime fromDate, @PathVariable("to") LocalDateTime toDate) {
+            List<Flight> flights = flightService.getFlightsByDate(fromDate, toDate);
+
+            return ResponseEntity.ok(Response.builder()
+                    .timeStamp(LocalDateTime.now())
+                    .data("flights", flights)
+                    .message("All flights retrieved from " + fromDate.toString() + " to " + toDate.toString())
+                    .success(true)
+                    .build()
+            );
+    }
+
+    @GetMapping("/destination/{destination}")
+    public ResponseEntity<Response> getFlightsByDate(@PathVariable("destination") String destination) {
+        List<Flight> flights = flightService.getFlightsByDestination(destination);
+
+        return ResponseEntity.ok(Response.builder()
+                .timeStamp(LocalDateTime.now())
+                .data("flights", flights)
+                .message("All flights retrieved for destionation :" + destination)
+                .success(true)
+                .build()
+        );
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Response> updateFlight(@PathVariable("id") Long flightId, FlightUpdateRequest request) {
         try {
@@ -98,6 +145,48 @@ public class FlightController {
                     .timeStamp(LocalDateTime.now())
                     .message("Flight with given id does not exist in database.")
                     .success(false)
+                    .build()
+            );
+        }
+    }
+
+    @PatchMapping("/{id}/delay")
+    public ResponseEntity<Response> delayFlight(@PathVariable("id") Long flightId) {
+        try {
+            flightService.delayFlight(flightId);
+
+            return ResponseEntity.ok(Response.builder()
+                    .timeStamp(LocalDateTime.now())
+                    .success(true)
+                    .message("Flight status was successfully set to delayed.")
+                    .build()
+            );
+        } catch (FlightDoesNotExist exception) {
+            return ResponseEntity.badRequest().body(Response.builder()
+                    .timeStamp(LocalDateTime.now())
+                    .success(false)
+                    .message("Flight with given id does not exist.")
+                    .build()
+            );
+        }
+    }
+
+    @PatchMapping("/{id}/cancel")
+    public ResponseEntity<Response> cancelFLight(@PathVariable("id") Long flightId) {
+        try {
+            flightService.cancelFlight(flightId);
+
+            return ResponseEntity.ok(Response.builder()
+                    .timeStamp(LocalDateTime.now())
+                    .success(true)
+                    .message("Flight status was successfully set to cancelled.")
+                    .build()
+            );
+        } catch (FlightDoesNotExist exception) {
+            return ResponseEntity.badRequest().body(Response.builder()
+                    .timeStamp(LocalDateTime.now())
+                    .success(false)
+                    .message("Flight with given id does not exist.")
                     .build()
             );
         }

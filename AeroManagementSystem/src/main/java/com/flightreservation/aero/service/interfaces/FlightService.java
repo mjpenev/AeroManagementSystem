@@ -7,7 +7,6 @@ import com.flightreservation.aero.model.Ticket;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public interface FlightService {
     Flight createFlight(FlightCreationRequest request);

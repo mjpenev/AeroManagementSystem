@@ -4,7 +4,6 @@ import com.flightreservation.aero.dto.requests.RegisterRequest;
 import com.flightreservation.aero.dto.responses.Response;
 import com.flightreservation.aero.exceptions.UserAlreadyExists;
 import com.flightreservation.aero.service.interfaces.AuthenticationService;
-import com.flightreservation.aero.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

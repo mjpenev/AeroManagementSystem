@@ -2,17 +2,12 @@ package com.flightreservation.aero.service.implementations;
 
 import com.flightreservation.aero.exceptions.SeatAlreadyReserved;
 import com.flightreservation.aero.exceptions.TicketDoesNotExist;
-import com.flightreservation.aero.exceptions.UserAlreadyExists;
 import com.flightreservation.aero.exceptions.UserNotFoundException;
 import com.flightreservation.aero.model.Flight;
 import com.flightreservation.aero.model.Ticket;
 import com.flightreservation.aero.model.User;
 import com.flightreservation.aero.repository.TicketRepository;
 import com.flightreservation.aero.service.interfaces.TicketService;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,6 @@
 package com.flightreservation.aero.dto.requests;
 
-import com.flightreservation.aero.enums.FlightClass;
 import com.flightreservation.aero.enums.FlightStatus;
-import com.flightreservation.aero.model.Ticket;
 import lombok.Data;
 
 import java.time.LocalDateTime;

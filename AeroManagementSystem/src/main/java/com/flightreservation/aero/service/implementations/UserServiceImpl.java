@@ -1,16 +1,11 @@
 package com.flightreservation.aero.service.implementations;
 
-import com.flightreservation.aero.dto.requests.FlightCreationRequest;
 import com.flightreservation.aero.dto.requests.RegisterRequest;
 import com.flightreservation.aero.dto.requests.UpdateUserRequest;
-import com.flightreservation.aero.exceptions.FlightDoesNotExist;
 import com.flightreservation.aero.exceptions.UserAlreadyExists;
-import com.flightreservation.aero.model.Flight;
 import com.flightreservation.aero.model.Ticket;
 import com.flightreservation.aero.model.User;
 import com.flightreservation.aero.repository.UserRepository;
-import com.flightreservation.aero.service.interfaces.FlightService;
-import com.flightreservation.aero.service.interfaces.TicketService;
 import com.flightreservation.aero.service.interfaces.UserService;
 import com.flightreservation.aero.exceptions.UserNotFoundException;
 import jakarta.transaction.Transactional;
