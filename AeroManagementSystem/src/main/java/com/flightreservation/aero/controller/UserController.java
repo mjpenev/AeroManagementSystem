@@ -1,8 +1,11 @@
 package com.flightreservation.aero.controller;
 
+import com.flightreservation.aero.dto.requests.FlightCreationRequest;
 import com.flightreservation.aero.dto.responses.Response;
 import com.flightreservation.aero.dto.responses.UserResponseDto;
+import com.flightreservation.aero.exceptions.UserNotFoundException;
 import com.flightreservation.aero.model.User;
+import com.flightreservation.aero.service.interfaces.FlightService;
 import com.flightreservation.aero.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,41 +45,61 @@ public class UserController {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<Response> getUserById(@PathVariable("id") Long userId) {
-        User user = userService.getUserById(userId);
+        try {
+            User user = userService.getUserById(userId);
 
-        UserResponseDto userResponseDto = new UserResponseDto(
-                user.getUserId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getRole()
-        );
+            UserResponseDto userResponseDto = new UserResponseDto(
+                    user.getUserId(),
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getRole()
+            );
 
-        return ResponseEntity.ok(Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .data("users", userResponseDto)
-                .message("User retrieved successfully.")
-                .success(true)
-                .build()
-        );
+            return ResponseEntity.ok(Response.builder()
+                    .timeStamp(LocalDateTime.now())
+                    .data("users", userResponseDto)
+                    .message("User retrieved successfully.")
+                    .success(true)
+                    .build()
+            );
+        } catch (UserNotFoundException exception) {
+            return ResponseEntity.badRequest().body(
+                    Response.builder()
+                            .timeStamp(LocalDateTime.now())
+                            .message("User is not found in database.")
+                            .success(false)
+                            .build()
+            );
+        }
     }
 
     @GetMapping("/username/{username}")
     public ResponseEntity<Response> getUserByUsername(@PathVariable("username") String username) {
-        User user = userService.getUserByUsername(username);
+        try {
+            User user = userService.getUserByUsername(username);
 
-        UserResponseDto userResponseDto = new UserResponseDto(
-                user.getUserId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getRole()
-        );
-        return ResponseEntity.ok(Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .data("users", userResponseDto)
-                .message("User retrieved successfully.")
-                .success(true)
-                .build()
-        );
+            UserResponseDto userResponseDto = new UserResponseDto(
+                    user.getUserId(),
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getRole()
+            );
+            return ResponseEntity.ok(Response.builder()
+                    .timeStamp(LocalDateTime.now())
+                    .data("users", userResponseDto)
+                    .message("User retrieved successfully.")
+                    .success(true)
+                    .build()
+            );
+        } catch (UserNotFoundException exception) {
+            return ResponseEntity.badRequest().body(
+                    Response.builder()
+                            .timeStamp(LocalDateTime.now())
+                            .message("User is not found in database.")
+                            .success(false)
+                            .build()
+            );
+        }
     }
 
 }

@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class TicketServiceImpl implements TicketService {
     private TicketRepository ticketRepository;
 
     @Override
+    @Transactional
     public Ticket createTicket(User user, Flight flight, int seatNum) {
         if (ticketRepository.existsByFlightAndSeatNumber(flight, seatNum)) {
             throw new SeatAlreadyReserved();

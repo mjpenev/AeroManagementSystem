@@ -1,5 +1,6 @@
 package com.flightreservation.aero.service.implementations;
 
+import com.flightreservation.aero.dto.requests.FlightCreationRequest;
 import com.flightreservation.aero.dto.requests.RegisterRequest;
 import com.flightreservation.aero.dto.requests.UpdateUserRequest;
 import com.flightreservation.aero.exceptions.FlightDoesNotExist;
@@ -12,10 +13,12 @@ import com.flightreservation.aero.service.interfaces.FlightService;
 import com.flightreservation.aero.service.interfaces.TicketService;
 import com.flightreservation.aero.service.interfaces.UserService;
 import com.flightreservation.aero.exceptions.UserNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +26,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public User createUser(RegisterRequest request) {
 
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
@@ -41,12 +45,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) {
-        return null;
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User does not exist in database.");
+        }
+
+        return userRepository.getReferenceById(userId);
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return null;
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User does not exist in database.");
+        }
+
+        return userRepository.findByUsername(username).get();
     }
 
     @Override
@@ -61,12 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean userExists(Long userId) {
-        return false;
-    }
-
-    @Override
-    public boolean userExists(String username) {
-        return false;
+        return userRepository.existsById(userId);
     }
 
     @Override
@@ -74,23 +83,4 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    @Override
-    public Flight createFlight(Flight flight) {
-        return null;
-    }
-
-    @Override
-    public Flight updateFlightById(Long flightId) {
-        return null;
-    }
-
-    @Override
-    public void cancelFlight(Long flightId) {
-
-    }
-
-    @Override
-    public void delayFlight(Long flightId) {
-
-    }
 }

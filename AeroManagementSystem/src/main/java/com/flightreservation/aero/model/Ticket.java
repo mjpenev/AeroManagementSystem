@@ -1,5 +1,6 @@
 package com.flightreservation.aero.model;
 
+import com.flightreservation.aero.enums.Direction;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,8 @@ public class Ticket {
     private Long ticketId;
 
     private int seatNumber;
+
+    private Direction direction;
 
     private LocalDateTime purchaseDate;
 

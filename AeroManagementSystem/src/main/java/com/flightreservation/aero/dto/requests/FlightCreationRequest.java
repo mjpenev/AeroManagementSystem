@@ -1,37 +1,22 @@
-package com.flightreservation.aero.model;
+package com.flightreservation.aero.dto.requests;
 
-import com.flightreservation.aero.enums.Direction;
 import com.flightreservation.aero.enums.FlightClass;
 import com.flightreservation.aero.enums.FlightStatus;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.flightreservation.aero.model.Ticket;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor
-public class Flight {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long flightId;
-
+@Data
+public class FlightCreationRequest {
     private int seats;
     private int price;
-
     private String fromDestination;
     private String toDestination;
-
     private LocalDateTime arrivalTime;
     private LocalDateTime departureTime;
-
     private FlightClass flightClass;
     private FlightStatus flightStatus;
-
-    @OneToMany(mappedBy = "flight")
     private List<Ticket> tickets;
 }

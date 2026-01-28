@@ -1,11 +1,8 @@
 package com.flightreservation.aero.dto.requests;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 
-@Getter
-@AllArgsConstructor
+@Data
 public class UpdateUserRequest {
     private String username;
     private String email;
