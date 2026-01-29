@@ -14,5 +14,4 @@ public interface UserService {
     User updateUser(Long userId, UpdateUserRequest request);
     List<User> getAllUsers();
     boolean userExists(Long userId);
-    Ticket buyTicket(Long userId, Long flightId, int SeatNum);
 }

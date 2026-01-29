@@ -3,7 +3,9 @@ package com.flightreservation.aero.controller;
 import com.flightreservation.aero.dto.responses.Response;
 import com.flightreservation.aero.dto.responses.UserResponseDto;
 import com.flightreservation.aero.exceptions.UserNotFoundException;
+import com.flightreservation.aero.model.Ticket;
 import com.flightreservation.aero.model.User;
+import com.flightreservation.aero.service.interfaces.TicketService;
 import com.flightreservation.aero.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
+    private final TicketService ticketService;
 
     @GetMapping
     public ResponseEntity<Response> getAllUsers() {
@@ -99,5 +102,30 @@ public class UserController {
             );
         }
     }
+
+    @GetMapping("/username/{username}/tickets")
+    public ResponseEntity<Response> getTicketByUsername(@PathVariable("username") String username) {
+        try {
+            Long userId = userService.getUserByUsername(username).getUserId();
+            List<Ticket> allTickets = ticketService.getAllTicketsForUserId(userId);
+
+            return ResponseEntity.ok(Response.builder()
+                    .timeStamp(LocalDateTime.now())
+                    .data("tickets", allTickets)
+                    .message(username + "'s tickets retrieved successfully.")
+                    .success(true)
+                    .build()
+            );
+        } catch (UserNotFoundException exception) {
+            return ResponseEntity.badRequest().body(
+                    Response.builder()
+                            .timeStamp(LocalDateTime.now())
+                            .message("User is not found in database.")
+                            .success(false)
+                            .build()
+            );
+        }
+    }
+
 
 }

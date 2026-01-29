@@ -49,12 +49,18 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    @Transactional
     public void removeTicket(Long ticketId) {
-        throw new TicketDoesNotExist();
+        if (ticketRepository.findById(ticketId).isEmpty()) {
+            throw new TicketDoesNotExist("Ticket with given Id does not exist");
+        }
+
+        ticketRepository.deleteById(ticketId);
     }
 
     @Override
+    @Transactional
     public List<Ticket> getAllTicketsForUserId(Long userId) {
-        throw new UserNotFoundException();
+        return userService.getUserById(userId).getTickets();
     }
 }

@@ -83,9 +83,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.existsById(userId);
     }
 
-    @Override
-    public Ticket buyTicket(Long userId, Long flightId, int SeatNum) {
-        return null;
-    }
-
 }
