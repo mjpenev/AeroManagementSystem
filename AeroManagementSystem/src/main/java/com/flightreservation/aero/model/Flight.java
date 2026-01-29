@@ -1,5 +1,6 @@
 package com.flightreservation.aero.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flightreservation.aero.enums.Direction;
 import com.flightreservation.aero.enums.FlightClass;
 import com.flightreservation.aero.enums.FlightStatus;
@@ -33,5 +34,6 @@ public class Flight {
     private FlightStatus flightStatus;
 
     @OneToMany(mappedBy = "flight")
+    @JsonIgnore
     private List<Ticket> tickets;
 }

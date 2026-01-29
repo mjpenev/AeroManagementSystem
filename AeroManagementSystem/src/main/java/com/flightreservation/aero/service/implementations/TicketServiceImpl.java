@@ -1,15 +1,14 @@
 package com.flightreservation.aero.service.implementations;
 
-import com.flightreservation.aero.exceptions.SeatAlreadyReserved;
-import com.flightreservation.aero.exceptions.TicketDoesNotExist;
-import com.flightreservation.aero.exceptions.TicketsAlreadySold;
-import com.flightreservation.aero.exceptions.UserNotFoundException;
+import com.flightreservation.aero.enums.Direction;
+import com.flightreservation.aero.exceptions.*;
 import com.flightreservation.aero.model.Flight;
 import com.flightreservation.aero.model.Ticket;
 import com.flightreservation.aero.model.User;
 import com.flightreservation.aero.repository.TicketRepository;
 import com.flightreservation.aero.service.interfaces.FlightService;
 import com.flightreservation.aero.service.interfaces.TicketService;
+import com.flightreservation.aero.service.interfaces.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,11 +22,15 @@ import java.util.List;
 public class TicketServiceImpl implements TicketService {
     private final TicketRepository ticketRepository;
     private final FlightService flightService;
+    private final UserService userService;
 
 
     @Override
     @Transactional
-    public Ticket createTicket(User user, Flight flight, int seatNum) {
+    public Ticket createTicket(Long userId, Long flightId, Direction direction, int seatNum) {
+        Flight flight = flightService.getFlightById(flightId);
+        User user = userService.getUserById(userId);
+
         if (ticketRepository.existsByFlightAndSeatNumber(flight, seatNum)) {
             throw new SeatAlreadyReserved();
         }
@@ -40,8 +43,7 @@ public class TicketServiceImpl implements TicketService {
         ticket.setFlight(flight);
         ticket.setSeatNumber(seatNum);
         ticket.setPurchaseDate(LocalDateTime.now());
-
-        flight.getTickets().add(ticket);
+        ticket.setDirection(direction);
 
         return ticketRepository.save(ticket);
     }

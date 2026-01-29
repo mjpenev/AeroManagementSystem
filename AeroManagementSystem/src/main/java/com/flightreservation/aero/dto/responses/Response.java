@@ -13,11 +13,8 @@ import java.util.Map;
 public class Response {
 
     protected LocalDateTime timeStamp;
-    protected int statusCode;
     protected HttpStatus status;
-    protected String reason;
     protected String message;
-    protected String developerMessage;
     protected boolean success;
     protected Map<String, Object> data;
 
@@ -27,11 +24,8 @@ public class Response {
 
     public static class ResponseBuilder {
         private LocalDateTime timeStamp;
-        private int statusCode;
         private HttpStatus status;
-        private String reason;
         private String message;
-        private String developerMessage;
         private boolean success;
         private Map<String, Object> data = new HashMap<>();
 
@@ -40,28 +34,13 @@ public class Response {
             return this;
         }
 
-        public ResponseBuilder statusCode(int statusCode) {
-            this.statusCode = statusCode;
-            return this;
-        }
-
         public ResponseBuilder status(HttpStatus status) {
             this.status = status;
             return this;
         }
 
-        public ResponseBuilder reason(String reason) {
-            this.reason = reason;
-            return this;
-        }
-
         public ResponseBuilder message(String message) {
             this.message = message;
-            return this;
-        }
-
-        public ResponseBuilder developerMessage(String developerMessage) {
-            this.developerMessage = developerMessage;
             return this;
         }
 
@@ -78,11 +57,8 @@ public class Response {
         public Response build() {
             return new Response(
                     this.timeStamp,
-                    this.statusCode,
                     this.status,
-                    this.reason,
                     this.message,
-                    this.developerMessage,
                     this.success,
                     this.data
             );

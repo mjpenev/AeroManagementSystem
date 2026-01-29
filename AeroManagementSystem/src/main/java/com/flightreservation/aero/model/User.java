@@ -1,4 +1,5 @@
 package com.flightreservation.aero.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flightreservation.aero.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,5 +26,6 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "passenger")
+    @JsonIgnore
     private List<Ticket> tickets;
 }

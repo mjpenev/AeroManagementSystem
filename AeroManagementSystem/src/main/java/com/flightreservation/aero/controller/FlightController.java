@@ -6,6 +6,7 @@ import com.flightreservation.aero.dto.responses.Response;
 import com.flightreservation.aero.exceptions.FlightDoesNotExist;
 import com.flightreservation.aero.exceptions.TicketsAlreadySold;
 import com.flightreservation.aero.model.Flight;
+import com.flightreservation.aero.model.Ticket;
 import com.flightreservation.aero.service.interfaces.FlightService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -126,6 +127,29 @@ public class FlightController {
                 .success(true)
                 .build()
         );
+    }
+
+
+    @GetMapping("/{id}/tickets")
+    public ResponseEntity<Response> getAllTicketsForFlight(@PathVariable("id") Long flightId) {
+        try {
+            List<Ticket> tickets = flightService.getFlightById(flightId).getTickets();
+
+            return ResponseEntity.badRequest().body(Response.builder()
+                    .timeStamp(LocalDateTime.now())
+                    .message("Tickets retrieved successfully for flight with ID " + flightId)
+                    .data("tickets", tickets)
+                    .success(false)
+                    .build()
+            );
+        } catch (FlightDoesNotExist exception) {
+            return ResponseEntity.badRequest().body(Response.builder()
+                    .timeStamp(LocalDateTime.now())
+                    .message("Flight with given id couldn't be found in database.")
+                    .success(false)
+                    .build()
+            );
+        }
     }
 
     @PutMapping("/{id}")
